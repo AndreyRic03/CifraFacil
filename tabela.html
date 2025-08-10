@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CifraFácil - Tabela de Gastos</title>
+    <link rel="icon" type="image/png" href="./img/Logo.png.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fbfc;
+            padding: 30px;
+            text-align: center;
+        }
+        .voltar {
+            display: inline-block;
+            margin-bottom: 20px;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .voltar:hover {
+            background-color: #e74c3c;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px 15px;
+            min-width: 200px;
+            text-align: left;
+        }
+        th {
+            background-color: #004aad;
+            color: white;
+        }
+        td input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+        tfoot td {
+            font-weight: bold;
+            background-color: #e9f1ff;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #004aad;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003580;
+        }
+    </style>
+</head>
+<body>
+    <a href="curso.html" class="voltar">⬅ Voltar para o Curso</a>
+
+    <h1>Tabela de Gastos</h1>
+    <table id="tabela">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor (R$)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" placeholder="Ex: Mercado"></td>
+                <td><input type="number" step="0.01" placeholder="0.00" oninput="calcularTotal()"></td>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="Ex: Luz"></td>
+                <td><input type="number" step="0.01" placeholder="0.00" oninput="calcularTotal()"></td>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="Ex: Internet"></td>
+                <td><input type="number" step="0.01" placeholder="0.00" oninput="calcularTotal()"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td id="total">0.00</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <button onclick="adicionarLinha()">Adicionar linha</button>
+
+    <script>
+        function calcularTotal() {
+            let total = 0;
+            const valores = document.querySelectorAll('tbody tr td:nth-child(2) input');
+            valores.forEach(input => {
+                const valor = parseFloat(input.value) || 0;
+                total += valor;
+            });
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        function adicionarLinha() {
+            const tabela = document.querySelector('#tabela tbody');
+            const novaLinha = document.createElement('tr');
+            novaLinha.innerHTML = `
+                <td><input type="text" placeholder="Descrição"></td>
+                <td><input type="number" step="0.01" placeholder="0.00" oninput="calcularTotal()"></td>
+            `;
+            tabela.appendChild(novaLinha);
+        }
+    </script>
+</body>
+</html>
